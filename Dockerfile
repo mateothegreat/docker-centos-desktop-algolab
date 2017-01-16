@@ -5,7 +5,7 @@ FROM appsoa/docker-centos-desktop-vnc:latest
 USER root
 
 COPY src/home /home
-
+COPY src/etc /etc
 
 
 # RUN yum -y install nc && \
