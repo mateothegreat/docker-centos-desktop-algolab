@@ -8,10 +8,7 @@ COPY src/home /home
 COPY src/etc /etc
 
 
-# RUN yum -y install nc && \
-#     chmod +x /etc/xdg/xfce4/xinitrc && \
-#     chmod 0 /usr/bin/xfce4-panel && \
-#     chown -R user:wheel /home/user
+RUN yum -y install nc telnet nmap tcpdump && \
 
 EXPOSE 4100 5901 4440
 

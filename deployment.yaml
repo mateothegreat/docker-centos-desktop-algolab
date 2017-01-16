@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: stack-alglab444
+  name: alglab444
   labels:
     app: stack-alglab444
 spec:
@@ -35,12 +35,12 @@ spec:
 #       protocol: TCP
 #       name: ibg
 
-# ---
+---
 
 apiVersion: v1
 kind: ReplicationController
 metadata:
-  name: stack-alglab444
+  name: alglab444
 spec:
   replicas: 1
   template:
@@ -49,33 +49,36 @@ spec:
         app: stack-alglab444
     spec:
       containers:
-        - name: algolab-desktop
-          image: appsoa/docker-centos-desktop-algolab:latest
-          ports:
-            - containerPort: 5901
-              name: algolab-vnc
-          env:
-            - name: CONF_IB_GATEWAY
-              value: 'stack-alglab444:4100'
 
-        - name: algolab-webvnc
+        - name: vnc-web-proxy
           image: appsoa/docker-centos-desktop-webvnc:latest
           ports:
             - containerPort: 6901
-              name: algolab-webvnc
+              hostPort: 6901
           env:
             - name: CONF_VNC_HTTP_PORT
               value: '6901'
             - name: CONF_VNC_REMOTE
-              value: 'stack-alglab444:5901'
+              value: 'alglab444:5901'
+
+
+        - name: algolab-desktop
+          image: appsoa/docker-centos-desktop-algolab:latest
+          ports:
+            - containerPort: 5901
+              hostPort: 5901
+          env:
+            - name: CONF_IB_GATEWAY
+              value: 'alglab444:4100'
+
 
         - name: ibgateway-desktop
           image: appsoa/docker-centos-desktop-ibgateway:latest
           ports:
-            - containerPort: 5901
-              name: ibgateway-vnc
+            - containerPort: 5902
+              hostPort: 5902
             - containerPort: 4100
-              name: ibgateway-api
+              hostPort: 4100
           env:
             - name: CONF_VNC_PASS
               value: 'testing123'
@@ -92,16 +95,16 @@ spec:
             - name: CONF_IB_READ_ONLY
               value: 'no'
 
-        - name: ibgateway-webvnc
-          image: appsoa/docker-centos-desktop-webvnc:latest
-          ports:
-            - containerPort: 6901
-              name: ibg-webvnc
-          env:
-            - name: CONF_VNC_HTTP_PORT
-              value: '6902'
-            - name: CONF_VNC_REMOTE
-              value: 'stack-alglab444:5902'
+        # - name: ibgateway-webvnc
+        #   image: appsoa/docker-centos-desktop-webvnc:latest
+        #   ports:
+        #     - containerPort: 6902
+        #       hostPort: 6902
+        #   env:
+        #     - name: CONF_VNC_HTTP_PORT
+        #       value: '6902'
+        #     - name: CONF_VNC_REMOTE
+        #       value: 'svc-alglab444:5902'
 
 
 
