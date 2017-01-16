@@ -8,7 +8,7 @@ COPY src/home /home
 COPY src/etc /etc
 
 
-RUN yum -y install nc telnet nmap tcpdump && \
+RUN yum -y install nc telnet nmap tcpdump
 
 EXPOSE 4100 5901 4440
 

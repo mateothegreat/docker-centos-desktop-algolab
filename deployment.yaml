@@ -10,13 +10,23 @@ spec:
     app: stack-alglab444
   ports:
 
-    - port: 80
+    - port: 6901
       targetPort: 6901
       protocol: TCP
       name: http
 
     - port: 5901
       targetPort: 5901
+      protocol: TCP
+      name: vnc
+
+    - port: 6902
+      targetPort: 6902
+      protocol: TCP
+      name: http
+
+    - port: 5902
+      targetPort: 5902
       protocol: TCP
       name: vnc
 
@@ -50,7 +60,7 @@ spec:
     spec:
       containers:
 
-        - name: vnc-web-proxy
+        - name: algolab-webvnc
           image: appsoa/docker-centos-desktop-webvnc:latest
           ports:
             - containerPort: 6901
@@ -70,6 +80,18 @@ spec:
           env:
             - name: CONF_IB_GATEWAY
               value: 'alglab444:4100'
+
+
+        - name: ibgateway-webvnc
+          image: appsoa/docker-centos-desktop-webvnc:latest
+          ports:
+            - containerPort: 6902
+              hostPort: 6902
+          env:
+            - name: CONF_VNC_HTTP_PORT
+              value: '6902'
+            - name: CONF_VNC_REMOTE
+              value: 'alglab444:5902'
 
 
         - name: ibgateway-desktop
