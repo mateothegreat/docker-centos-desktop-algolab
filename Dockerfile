@@ -1,12 +1,11 @@
 #
 #
-FROM appsoa/docker-centos-desktop-vnc:latest
+FROM gcr.io/virtualmachines-154415/docker-centos-desktop-vnc:1.0.0
 
 USER root
 
 COPY src/home /home
-COPY src/etc /etc
-
+# COPY src/etc /etc
 
 RUN yum -y install nc telnet nmap tcpdump
 
