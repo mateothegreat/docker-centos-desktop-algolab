@@ -62,7 +62,7 @@ Now that we have a stock/standard image created with some default files we can c
 ```
 $ gcloud compute disks delete algolab-user-alglab111 -q
 $ gcloud compute disks create \
-            algolab-user-alglab111 \
+            algolab-user-alglab333 \
             --description "Persistent directory for AlgoLab Desktop Application." \
             --size 10 \
             --image algolab-user-image

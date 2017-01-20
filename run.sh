@@ -18,4 +18,4 @@ docker run -id  -e CONF_VNC_PASS=changeme \
                 -e CONF_IB_GATEWAY=alglab333:4100 \
                 -p 5901:5901 \
                 --name algolab \
-                 gcr.io/virtualmachines-154415/docker-centos-desktop-algolab:1.0.0
+                 gcr.io/virtualmachines-154415/docker-centos-desktop-algolab:1.0.0-4
