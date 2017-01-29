@@ -24,6 +24,34 @@ spec:
       #     limits:
       #       cpu: 200m
       #       memory: 100Mi
+      - name: algolab-webvnc
+        image: appsoa/docker-centos-desktop-ibgateway:latest
+        ports:
+        - containerPort: 6902
+        env:
+        - name: CONF_VNC_HTTP_PORT
+          value: "6902"
+        - name: CONF_VNC_REMOTE
+          value: "127.0.0.1:5902"
+        - name: CONF_VNC_PASS
+          value: "greg2017"
+        - name: CONF_CONTROLLER_PORT
+          value: "4440"
+        - name: CONF_API_PORT
+          value: "4100"
+        - name: CONF_TRADING_MODE
+          value: "paper"
+        - name: CONF_IB_USER
+          value: "alglab111"
+        - name: CONF_IB_PASS
+          value: "greg2017"
+        - name: CONF_IB_GATEWAY
+          value: "127.0.0.1:4100"
+        resources:
+          limits:
+            cpu: 500m
+            memory: 500Mi
+            
       - name: algolab-desktop
         image: appsoa/docker-centos-desktop-algolab:latest
         ports:
@@ -49,7 +77,7 @@ spec:
         resources:
           limits:
             cpu: 500m
-            memory: 700Mi
+            memory: 500Mi
       volumes:
       - name: algolab-user-alglab111
         gcePersistentDisk:
