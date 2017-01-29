@@ -16,4 +16,12 @@
       - protocol: TCP
         port: 6902
         targetPort: 6902
-        name: vnc
+        name: vncserver
+      # - protocol: TCP
+      #   port: 5901
+      #   targetPort: 5901
+      #   name: vncasdf
+      # - protocol: TCP
+      #   port: 5902
+      #   targetPort: 5902
+      #   name: vncfaef
