@@ -14,8 +14,8 @@ docker run -id  -e CONF_VNC_PASS=changeme \
                 -e CONF_TRADING_MODE=paper \
                 -e CONF_IB_USER=alglab333 \
                 -e CONF_IB_PASS=greg2017 \
-                -e CONF_IB_READ_ONLY=no \
-                -e CONF_IB_GATEWAY=alglab333:4100 \
+                -e CONF_IB_GATEWAY=127.0.0.1:4100 \
                 -p 5901:5901 \
+                -p 6901:6901 \
                 --name algolab \
-                 gcr.io/virtualmachines-154415/docker-centos-desktop-algolab:1.0.0-4
+                 appsoa/docker-centos-desktop-algolab:latest

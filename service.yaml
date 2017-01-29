@@ -1,0 +1,19 @@
+---
+  kind: Service
+  apiVersion: v1
+  metadata:
+    name: algolab111
+    namespace: algolab
+  spec:
+    type: LoadBalancer
+    selector:
+      app: algolab-desktop
+    ports:
+      - protocol: TCP
+        port: 6901
+        targetPort: 6901
+        name: webvnc
+      - protocol: TCP
+        port: 5901
+        targetPort: 5901
+        name: vnc
