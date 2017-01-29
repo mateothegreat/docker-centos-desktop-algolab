@@ -1,29 +1,14 @@
-kind: Service
-apiVersion: v1
-metadata:
-  name: algolab111-svc
-  namespace: algolab
-spec:
-  type: LoadBalancer
-  selector:
-    app: desktop
-  ports:
-    - protocol: TCP
-      port: 6901
-      targetPort: 6000
-      name: webvnc
-    # - protocol: TCP
-    #   port: 6902
-    #   targetPort: 6902
-    #   name: vncserver
-    # - protocol: TCP
-    #   port: 5901
-    #   targetPort: 5901
-    #   name: vncasdf
-    # - protocol: TCP
-    #   port: 5902
-    #   targetPort: 5902
-    #   name: vncfaef
+#                                         __                    
+#                                        /\ \__                 
+#     __  __    ___     ___ ___      __  \ \ ,_\    __    ___   
+#    /\ \/\ \  / __`\ /' __` __`\  /'__`\ \ \ \/  /'__`\ / __`\ 
+#    \ \ \_\ \/\ \L\ \/\ \/\ \/\ \/\ \L\.\_\ \ \_/\  __//\ \L\ \
+#     \/`____ \ \____/\ \_\ \_\ \_\ \__/.\_\\ \__\ \____\ \____/
+#      `/___/> \/___/  \/_/\/_/\/_/\/__/\/_/ \/__/\/____/\/___/ 
+#         /\___/                                                
+#         \/__/                                                 
+#
+
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
@@ -69,13 +54,14 @@ spec:
       - name: algolab-desktop
         image: appsoa/docker-centos-desktop-algolab:latest
         ports:
-        - containerPort: 6000
+        - containerPort: 5901
+        - containerPort: 6901
         volumeMounts:
         - mountPath: /home/user/Desktop/AlgoLab/Prefs
           name: algolab-user-alglab111
         env:
         - name: CONF_VNC_HTTP_PORT
-          value: "6000"
+          value: "6901"
         - name: CONF_VNC_REMOTE
           value: "127.0.0.1:5901"
         - name: CONF_VNC_PASS
@@ -101,3 +87,30 @@ spec:
         gcePersistentDisk:
           pdName: algolab-user-alglab111
           fsType: ext4
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: algolab111-svc
+  namespace: algolab
+spec:
+  type: LoadBalancer
+  selector:
+    app: desktop
+  ports:
+    - protocol: TCP
+      port: 6901
+      targetPort: 6901
+      name: webvnc
+    - protocol: TCP
+      port: 6902
+      targetPort: 6902
+      name: vncserver
+    - protocol: TCP
+      port: 5901
+      targetPort: 5901
+      name: vncasdf
+    - protocol: TCP
+      port: 5902
+      targetPort: 5902
+      name: vncfaef

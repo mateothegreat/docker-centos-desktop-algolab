@@ -21,7 +21,7 @@ RUN wget -O /home/user/Desktop/AlgoLabLinux64.zip https://storage.googleapis.com
     echo $TZ > /etc/timezone && \
     ln -snf /usr/share/zoneinfo/$TZ /etc/localtime 
 
-EXPOSE 5901 6901
+EXPOSE 6901
 
 USER user
 ENTRYPOINT ["/entrypoint.sh"]

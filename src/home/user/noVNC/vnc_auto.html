@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
 
     <!--
@@ -39,28 +38,25 @@
     <!-- Stylesheets -->
     <link rel="stylesheet" href="app/styles/auto.css">
 
-    <!--
+     <!--
     <script type='text/javascript'
         src='http://getfirebug.com/releases/lite/1.2/firebug-lite-compressed.js'></script>
     -->
-    <script src="core/util.js"></script>
-    <script src="app/webutil.js"></script>
+        <script src="core/util.js"></script>
+        <script src="app/webutil.js"></script>
 </head>
 
 <body style="margin: 0px;">
     <div id="noVNC_container">
-        <div id="noVNC_status_bar" class="noVNC_status_bar" style="margin-top: 0px;">
-            <table border=0 width="100%">
-                <tr>
-                    <td>
-                        <div id="noVNC_status" style="position: relative; height: auto;">
-                            Loading
-                        </div>
-                    </td>
-                    <td width="1%">
-                        <div id="noVNC_buttons">
-                            <input type=button value="Send CtrlAltDel" id="sendCtrlAltDelButton">
-                            <span id="noVNC_xvp_buttons">
+            <div id="noVNC_status_bar" class="noVNC_status_bar" style="margin-top: 0px;">
+                <table border=0 width="100%"><tr>
+                    <td><div id="noVNC_status" style="position: relative; height: auto;">
+                        Loading
+                    </div></td>
+                    <td width="1%"><div id="noVNC_buttons">
+                        <input type=button value="Send CtrlAltDel"
+                            id="sendCtrlAltDelButton">
+                        <span id="noVNC_xvp_buttons">
                         <input type=button value="Shutdown"
                             id="xvpShutdownButton">
                         <input type=button value="Reboot"
@@ -68,17 +64,15 @@
                         <input type=button value="Reset"
                             id="xvpResetButton">
                         </span>
-                        </div>
-                    </td>
-                </tr>
-            </table>
-        </div>
-        <canvas id="noVNC_canvas" width="640px" height="20px">
+                            </div></td>
+                </tr></table>
+            </div>
+            <canvas id="noVNC_canvas" width="640px" height="20px">
                 Canvas not supported.
             </canvas>
-    </div>
+        </div>
 
-    <script>
+        <script>
         /*jslint white: false */
         /*global window, $, Util, RFB, */
         "use strict";
@@ -86,10 +80,8 @@
         // Load supporting scripts
         WebUtil.load_scripts({
             'core': ["base64.js", "websock.js", "des.js", "input/keysymdef.js",
-                "input/xtscancodes.js", "input/util.js", "input/devices.js",
-                "display.js", "inflator.js", "rfb.js", "input/keysym.js"
-            ]
-        });
+                     "input/xtscancodes.js", "input/util.js", "input/devices.js",
+                     "display.js", "inflator.js", "rfb.js", "input/keysym.js"]});
 
         var rfb;
         var resizeTimeout;
@@ -105,20 +97,14 @@
                     rfb.requestDesktopSize(innerW, innerH - controlbarH);
             }
         }
-
         function FBUComplete(rfb, fbu) {
             UIresize();
-            rfb.set_onFBUComplete(function() {});
+            rfb.set_onFBUComplete(function() { });
         }
-
         function updateDesktopName(rfb, name) {
             desktopName = name;
         }
-
         function passwordRequired(rfb, msg) {
-            return false;
-            rfb.sendPassword('algolab2017');
-
             if (typeof msg === 'undefined') {
                 msg = 'Password Required: ';
             }
@@ -134,34 +120,26 @@
             document.getElementById('noVNC_status').innerHTML = html;
             document.getElementById('noVNC_status').querySelector('label').textContent = msg;
         }
-
         function setPassword() {
-            rfb.sendPassword('algolab2017');
-
-            // rfb.sendPassword(document.getElementById('password_input').value);
+            rfb.sendPassword(document.getElementById('password_input').value);
             return false;
         }
-
         function sendCtrlAltDel() {
             rfb.sendCtrlAltDel();
             return false;
         }
-
         function xvpShutdown() {
             rfb.xvpShutdown();
             return false;
         }
-
         function xvpReboot() {
             rfb.xvpReboot();
             return false;
         }
-
         function xvpReset() {
             rfb.xvpReset();
             return false;
         }
-
         function status(text, level) {
             switch (level) {
                 case 'normal':
@@ -174,7 +152,6 @@
             document.getElementById('noVNC_status_bar').setAttribute("class", "noVNC_status_" + level);
             document.getElementById('noVNC_status').textContent = text;
         }
-
         function updateState(rfb, state, oldstate) {
             var cad = document.getElementById('sendCtrlAltDelButton');
             switch (state) {
@@ -184,11 +161,10 @@
                 case 'connected':
                     if (rfb && rfb.get_encrypt()) {
                         status("Connected (encrypted) to " +
-                            desktopName, "normal");
-                    }
-                    else {
+                               desktopName, "normal");
+                    } else {
                         status("Connected (unencrypted) to " +
-                            desktopName, "normal");
+                               desktopName, "normal");
                     }
                     break;
                 case 'disconnecting':
@@ -204,30 +180,27 @@
 
             if (state === 'connected') {
                 cad.disabled = false;
-            }
-            else {
+            } else {
                 cad.disabled = true;
                 xvpInit(0);
             }
 
         }
-
         function disconnected(rfb, reason) {
             if (typeof(reason) !== 'undefined') {
                 status(reason, "error");
             }
         }
-
         function notification(rfb, msg, level, options) {
             status(msg, level);
         }
 
-        window.onresize = function() {
+        window.onresize = function () {
             // When the window has been resized, wait until the size remains
             // the same for 0.5 seconds before sending the request for changing
             // the resolution of the session
             clearTimeout(resizeTimeout);
-            resizeTimeout = setTimeout(function() {
+            resizeTimeout = setTimeout(function(){
                 UIresize();
             }, 500);
         };
@@ -237,13 +210,12 @@
             xvpbuttons = document.getElementById('noVNC_xvp_buttons');
             if (ver >= 1) {
                 xvpbuttons.style.display = 'inline';
-            }
-            else {
+            } else {
                 xvpbuttons.style.display = 'none';
             }
         }
 
-        window.onscriptsload = function() {
+        window.onscriptsload = function () {
             var host, port, password, path, token;
 
             document.getElementById('sendCtrlAltDelButton').style.display = "inline";
@@ -261,18 +233,16 @@
             // if port == 80 (or 443) then it won't be present and should be
             // set manually
             if (!port) {
-                if (window.location.protocol.substring(0, 5) == 'https') {
+                if (window.location.protocol.substring(0,5) == 'https') {
                     port = 443;
                 }
-                else if (window.location.protocol.substring(0, 4) == 'http') {
+                else if (window.location.protocol.substring(0,4) == 'http') {
                     port = 80;
                 }
             }
-            s
-            // password = WebUtil.getConfigVar('password', '');
-            path = WebUtil.getConfigVar('path', 'websockify');
 
-            password = "algolab2017";
+            password = WebUtil.getConfigVar('password', '');
+            path = WebUtil.getConfigVar('path', 'websockify');
 
             // If a token variable is passed in, set the parameter in a cookie.
             // This is used by nova-novncproxy.
@@ -291,34 +261,29 @@
             }
 
             try {
-                rfb = new RFB({
-                    'target': document.getElementById('noVNC_canvas'),
-                    'encrypt': WebUtil.getConfigVar('encrypt',
-                        (window.location.protocol === "https:")),
-                    'repeaterID': WebUtil.getConfigVar('repeaterID', ''),
-                    'true_color': WebUtil.getConfigVar('true_color', true),
-                    'local_cursor': WebUtil.getConfigVar('cursor', true),
-                    'shared': WebUtil.getConfigVar('shared', true),
-                    'view_only': WebUtil.getConfigVar('view_only', false),
-                    'onNotification': notification,
-                    'onUpdateState': updateState,
-                    'onDisconnected': disconnected,
-                    'onXvpInit': xvpInit,
-                    'onPasswordRequired': passwordRequired,
-                    'onFBUComplete': FBUComplete,
-                    'onDesktopName': updateDesktopName
-                });
-
-            }
-            catch (exc) {
+                rfb = new RFB({'target':       document.getElementById('noVNC_canvas'),
+                               'encrypt':      WebUtil.getConfigVar('encrypt',
+                                        (window.location.protocol === "https:")),
+                               'repeaterID':   WebUtil.getConfigVar('repeaterID', ''),
+                               'true_color':   WebUtil.getConfigVar('true_color', true),
+                               'local_cursor': WebUtil.getConfigVar('cursor', true),
+                               'shared':       WebUtil.getConfigVar('shared', true),
+                               'view_only':    WebUtil.getConfigVar('view_only', false),
+                               'onNotification':  notification,
+                               'onUpdateState':  updateState,
+                               'onDisconnected': disconnected,
+                               'onXvpInit':    xvpInit,
+                               'onPasswordRequired':  passwordRequired,
+                               'onFBUComplete': FBUComplete,
+                               'onDesktopName': updateDesktopName});
+            } catch (exc) {
                 status('Unable to create RFB client -- ' + exc, 'error');
                 return; // don't continue trying to connect
             }
 
             rfb.connect(host, port, password, path);
         };
-    </script>
+        </script>
 
-</body>
-
+    </body>
 </html>
