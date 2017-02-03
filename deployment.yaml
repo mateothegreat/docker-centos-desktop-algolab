@@ -1,4 +1,4 @@
-#                                         __                    
+                                         __                    
 #                                        /\ \__                 
 #     __  __    ___     ___ ___      __  \ \ ,_\    __    ___   
 #    /\ \/\ \  / __`\ /' __` __`\  /'__`\ \ \ \/  /'__`\ / __`\ 
@@ -7,10 +7,10 @@
 #      `/___/> \/___/  \/_/\/_/\/_/\/__/\/_/ \/__/\/____/\/___/ 
 #         /\___/                                                
 #         \/__/                                                 
-#
 
 ---
 apiVersion: extensions/v1beta1
+#
 kind: Deployment
 metadata:
   name: alglab111
@@ -54,18 +54,18 @@ spec:
       - name: algolab-desktop
         image: appsoa/docker-centos-desktop-algolab:latest
         ports:
+        - containerPort: 7000
         - containerPort: 5901
-        - containerPort: 6901
         volumeMounts:
         - mountPath: /home/user/Desktop/AlgoLab/Prefs
           name: algolab-user-alglab111
         env:
         - name: CONF_VNC_HTTP_PORT
-          value: "6901"
+          value: "7000"
         - name: CONF_VNC_REMOTE
           value: "127.0.0.1:5901"
         - name: CONF_VNC_PASS
-          value: "algolab2017"
+          value: "greg2017"
         - name: CONF_CONTROLLER_PORT
           value: "4440"
         - name: CONF_API_PORT
@@ -80,8 +80,8 @@ spec:
           value: "127.0.0.1:4100"
         resources:
           limits:
-            cpu: 200m
-            memory: 200Mi
+            cpu: 2000m
+            memory: 2000Mi
       volumes:
       - name: algolab-user-alglab111
         gcePersistentDisk:
@@ -99,18 +99,10 @@ spec:
     app: desktop
   ports:
     - protocol: TCP
-      port: 6901
-      targetPort: 6901
+      port: 7000
+      targetPort: 7000
       name: webvnc
-    - protocol: TCP
-      port: 6902
-      targetPort: 6902
-      name: vncserver
     - protocol: TCP
       port: 5901
       targetPort: 5901
-      name: vncasdf
-    - protocol: TCP
-      port: 5902
-      targetPort: 5902
-      name: vncfaef
+      name: vnc

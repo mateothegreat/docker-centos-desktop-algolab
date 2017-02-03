@@ -1,27 +1,19 @@
----
-  kind: Service
-  apiVersion: v1
-  metadata:
-    name: algolab111-svc
-    namespace: algolab
-  spec:
-    type: LoadBalancer
-    selector:
-      app: algolab-desktop
-    ports:
-      - protocol: TCP
-        port: 6901
-        targetPort: 6901
-        name: webvnc
-      - protocol: TCP
-        port: 6902
-        targetPort: 6902
-        name: vncserver
-      # - protocol: TCP
-      #   port: 5901
-      #   targetPort: 5901
-      #   name: vncasdf
-      # - protocol: TCP
-      #   port: 5902
-      #   targetPort: 5902
-      #   name: vncfaef
+apiVersion: v1
+kind: Service
+metadata:
+  name: deployments-alglab111
+  labels:
+    app: workstation
+spec:
+  selector:
+    app: workstation
+  type:
+    LoadBalancer
+  ports:
+    # the port that this service should serve on
+  - port: 6901
+    targetPort: 6901
+    name: asdf
+  - port: 6999
+    targetPort: 6999
+    name: tsrtg
